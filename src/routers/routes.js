@@ -7,6 +7,7 @@ const jogadores = require('../controllers/jogadores');
 routes.get('/jogadores', jogadores.listarJogadores);
 routes.get('/jogadores/:id', jogadores.obterJogador);
 routes.post('/jogadores', jogadores.cadastrarJogador);
+routes.put('/jogadores/:id', jogadores.atualizarJogador);
 
 // Exportando rotas
 module.exports = routes;
