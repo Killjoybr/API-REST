@@ -68,9 +68,52 @@ const atualizarJogador = (request,response)=> {
     response.status(201).json({message:'Player atualizado com sucesso'});
 };
 
+const atualizarNick = (request,response)=> {
+    const {id} = request.params;
+    const {nick} = request.body;
+    const jogador = jogadores.find((jogador)=>{
+        return jogador.id === Number(id);
+    });
+
+    if(!jogador){
+        return response.status(404).json({message:'Player não encontrado'});
+    };
+    if(!nick){
+        return response.status(400).json({message:'Fornecer um nickname é obrigatório'});
+    };
+
+    jogador.nick = nick;
+
+    response.status(201).json({message:'Player atualizado com sucesso'});
+};
+
+const excluirJogador = (request, response)=> {
+    const {id} = request.params;
+
+    const jogador = jogadores.find((jogador)=>{
+        return jogador.id === Number(id);
+    });
+
+    if(!jogador){
+       return response.status(404).json({message:'Player não existe'});
+    };
+    
+    if(!id){
+       return response.status(400).json({message:'Player não existe'});
+    };
+
+    const indiceJogador = jogadores.indexOf(jogador.id);
+
+    jogadores.splice(indiceJogador, 1);
+
+    response.status(410).json({message:'Player apagado do sistema'});
+};
+
 module.exports = {
     listarJogadores,
     obterJogador,
     cadastrarJogador,
     atualizarJogador,
+    atualizarNick,
+    excluirJogador,
 };
